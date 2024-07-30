@@ -40,5 +40,5 @@
 <p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=tommy1003&" alt="tommy1003" /></p>
 
 <h3>My WakaTime stats</h3>
-<!--waka-->Total coding time last week: null
+<!--waka-->Total coding time last week: nullTotal coding time last week: null
 
