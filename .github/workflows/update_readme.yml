@@ -14,9 +14,9 @@ jobs:
 
       - name: Update README
         env:
-          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API }}
+          WAKATIME_API_KEY: ${{ secrets.WAKA_API }}
         run: |
-          curl -s "https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=${{ secrets.WAKATIME_API }}" > waka_stats.json
+          curl -s "https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=${{ secrets.WAKA_API }}" > waka_stats.json
           coding_time=$(jq -r '.data.human_readable_total' waka_stats.json)
           sed -i "s/<!--waka-->/<!--waka-->Total coding time last week: ${coding_time}/" README.md
 
