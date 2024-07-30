@@ -12,13 +12,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Update README
+      - name: Fetch WakaTime stats
         env:
-          WAKATIME_API_KEY: ${{ secrets.WAKA_API }}
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API }}
         run: |
-          curl -s "https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=${{ secrets.WAKA_API }}" > waka_stats.json
+          curl -s "https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=${{ secrets.WAKATIME_API }}" > waka_stats.json
           coding_time=$(jq -r '.data.human_readable_total' waka_stats.json)
-          sed -i "s/<!--waka-->/Total coding time last week: ${coding_time}/" README.md
+
+          # Read the current README content
+          readme_content=$(cat README.md)
+
+          # Update the placeholder with new stats
+          new_content=$(echo "$readme_content" | sed -E "s|(<!--waka-->)[^<]*(<!--endwaka-->)|\1\nTotal coding time last week: ${coding_time}\n\2|")
+
+          # Write the new content back to README.md
+          echo "$new_content" > README.md
 
       - name: Commit changes
         run: |
